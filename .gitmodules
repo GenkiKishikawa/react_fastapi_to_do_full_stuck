@@ -1,0 +1,6 @@
+[submodule "backend"]
+	path = backend
+	url = https://gitlab2.vic.co.jp/learning-tsukuba/fastapi/kishikawa/fastapi
+[submodule "frontend"]
+	path = frontend
+	url = https://gitlab2.vic.co.jp/learning-tsukuba/fastapi/kishikawa/react
