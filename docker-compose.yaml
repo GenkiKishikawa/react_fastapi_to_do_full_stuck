@@ -1,0 +1,49 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+    volumes:
+      - ./backend/.dockervenv:/src/.venv
+      - ./backend:/src
+    ports:
+      - ${API_PORT? Variable not set}:8000
+    env_file:
+      - .env
+    environment:
+      POSTGRES_SERVER: db
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?Variable not set}
+      POSTGRES_USER: ${POSTGRES_USER?Variable not set}
+      POSTGRES_DB: ${POSTGRES_DB?Variable not set}
+      POSTGRES_PORT: ${POSTGRES_PORT?Variable not set}
+      WATCHFILES_FORCE_POLLING: true
+    entrypoint: /src/entrypoint.sh
+
+  db:
+    image: postgres:15
+    environment:
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD?Variable not set}
+      POSTGRES_USER: ${POSTGRES_USER?Variable not set}
+      POSTGRES_DB: ${POSTGRES_DB?Variable not set}
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/src
+    command: sh -c 'cd app && yarn install && yarn start'
+    ports:
+      - "${FRONTEND_PORT?Variable not set}:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV?Variable not set}
+      API_PORT: ${API_PORT?Variable not set}
+    tty: true
+
+volumes:
+  postgres_data:
