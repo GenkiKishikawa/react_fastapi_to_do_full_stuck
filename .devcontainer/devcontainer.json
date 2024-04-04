@@ -24,3 +24,23 @@
 		}
 	}
 }
+// backendコンテナで作業を行いたい場合は以下の設定に変更する
+// {
+// 	"name": "backend",
+// 	"dockerComposeFile": "../docker-compose.yaml",
+// 	"service": "backend",
+// 	"workspaceFolder": "/src/",
+// 	"customizations": {
+// 		"vscode": {
+// 			"extensions": [
+// 				"GitHub.copilot",
+// 				"GitHub.copilot-chat",
+// 				"ms-python.vscode-pylance",
+// 				"ms-python.python",
+// 				"ms-python.debugpy",
+// 				"oderwat.indent-rainbow",
+// 				"KevinRose.vsc-python-indent"
+// 			]
+// 		}
+// 	}
+// }
